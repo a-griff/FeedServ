@@ -1,0 +1,96 @@
+FeedServ v1.0
+=============
+
+OVERVIEW
+--------
+FeedServ is a browser-side RSS and Atom feed reader written entirely in JavaScript.
+It does not use any server-side scripts or databases. All feed retrieval and
+display occur directly within the web browser.
+
+FeedServ must be hosted on a web server. It will not function properly when
+opened directly from local files (file:// paths), because modern browsers
+block network requests from local pages.
+
+FeedServ includes two example pages:
+  index.html       - Standard 3-column feed dashboard (requires JavaScript)
+  index-text.html  - Text-only feed list for console browsers (no JavaScript)
+
+FILES
+-----
+rssreader.js     - JavaScript that fetches and displays RSS/Atom feeds
+index.html       - Graphical feed display page (browser-side)
+index-text.html  - Text-only feed list for lynx, links, or w3m
+INSTRUCTIONS.txt - This file
+
+REQUIREMENTS
+------------
+• A web server capable of serving static HTML and JavaScript files
+• Any modern web browser (for index.html)
+• A text browser such as lynx, links, or w3m (for index-text.html)
+• Internet access to the RSS/Atom feeds being displayed
+
+FeedServ is browser-side only. The web server’s only role is to host these
+static files. No PHP, Perl, or CGI configuration is needed.
+
+INSTALLATION
+------------
+1. Upload all files to a directory on your web server, for example:
+     /var/www/html/feedserv/
+   or
+     /home/username/public_html/feedserv/
+
+2. Access the graphical page at:
+     https://yourdomain.com/feedserv/index.html
+
+   Access the text-only version at:
+     https://yourdomain.com/feedserv/index-text.html
+
+3. Do not open files directly from local storage. The feeds will not load.
+
+USAGE
+-----
+The main page (index.html) uses rssreader.js to fetch and display multiple feeds.
+
+Example feed entries in index.html:
+
+  <div class="rssbox" data-feed="https://feeds.bbci.co.uk/news/science_and_environment/rss.xml" data-max="10"></div>
+  <div class="rssbox" data-feed="https://www.nasa.gov/rss/dyn/breaking_news.rss" data-max="10"></div>
+  <div class="rssbox" data-feed="https://feeds.arstechnica.com/arstechnica/index" data-max="10"></div>
+
+Each <div> represents one feed. Change the URLs or add more as needed.
+The attribute data-max defines how many headlines are shown per feed.
+
+TEXT-ONLY PAGE
+--------------
+index-text.html is designed for text-based browsers and does not use JavaScript.
+
+Each feed is listed as a simple hyperlink, for example:
+
+  <ul>
+    <li><a href="https://feeds.bbci.co.uk/news/science_and_environment/rss.xml">BBC Science & Environment</a></li>
+    <li><a href="https://www.nasa.gov/rss/dyn/breaking_news.rss">NASA Breaking News</a></li>
+    <li><a href="https://feeds.arstechnica.com/arstechnica/index">Ars Technica</a></li>
+  </ul>
+
+To add more feeds, duplicate a <li> line and replace the URL and title.
+
+CONFIGURATION
+-------------
+Inside rssreader.js you can adjust:
+
+  const TIMEOUT_MS = 10000;          // Timeout for feed loading (milliseconds)
+  const PROXIES = [                  // Optional CORS proxy URLs
+    "https://api.allorigins.win/get?url=",
+    "https://api.codetabs.com/v1/proxy?quest="
+  ];
+
+NOTES
+-----
+• FeedServ is entirely client-side (browser-based).  
+• Must be served via HTTP or HTTPS (not local files).  
+• Works with both RSS and Atom feed formats.  
+• Ideal for lightweight dashboards, intranet pages, or public kiosks.  
+
+VERSION
+-------
+FeedServ v1.0
